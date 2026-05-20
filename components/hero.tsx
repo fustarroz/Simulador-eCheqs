@@ -59,7 +59,7 @@ export function Hero() {
                 height={200}
                 priority
                 sizes="(max-width: 640px) 200px, (max-width: 1024px) 280px, 340px"
-                className="h-12 w-auto select-none sm:h-16 lg:h-[4.5rem] dark:invert dark:brightness-200 dark:contrast-100"
+                className="h-12 w-auto select-none mix-blend-multiply sm:h-16 lg:h-[4.5rem] dark:mix-blend-normal dark:invert dark:brightness-200 dark:contrast-100"
               />
 
               {/* Divisor vertical hairline — hidden en mobile */}
