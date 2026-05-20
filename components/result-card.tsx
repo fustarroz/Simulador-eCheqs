@@ -42,7 +42,7 @@ export function ResultCard({ result }: ResultCardProps) {
         </header>
 
         {/* Main KPI grid */}
-        <div className="mt-7 grid gap-7 sm:grid-cols-2 sm:items-end sm:gap-8">
+        <div className="mt-7 grid gap-7 sm:grid-cols-2 sm:items-end sm:gap-6">
           <div>
             <p className="text-[13px] font-medium text-sage-100/80">
               Beneficio financiero total
@@ -67,7 +67,7 @@ export function ResultCard({ result }: ResultCardProps) {
             <CountUp
               value={result.effectiveRate}
               format={(v) => formatPercentDot(v)}
-              className="mt-5 block text-[2.5rem] font-semibold tracking-kpi tabular-nums text-paper sm:text-[3rem]"
+              className="mt-2 block text-[2.5rem] font-semibold tracking-kpi tabular-nums text-paper sm:text-[3rem]"
               aria-label="Tasa efectiva combinada"
             />
             <p className="mt-1 text-[13px] font-medium text-sage-100/70">
