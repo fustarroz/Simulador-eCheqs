@@ -42,8 +42,9 @@ export function ResultCard({ result }: ResultCardProps) {
         </header>
 
         {/* Main KPI grid */}
-        <div className="mt-7 grid gap-7 sm:grid-cols-2 sm:items-end sm:gap-6">
-          <div>
+        {/* Main KPI grid */}
+        <div className="mt-7 grid gap-7 sm:grid-cols-2 sm:items-end sm:gap-0">
+          <div className="sm:pr-8">
             <p className="text-[13px] font-medium text-sage-100/80">
               Beneficio financiero total
             </p>
@@ -55,7 +56,7 @@ export function ResultCard({ result }: ResultCardProps) {
             />
           </div>
 
-          <div className="sm:text-right">
+          <div className="sm:text-right sm:border-l sm:border-white/10 sm:pl-8">
             <p className="text-[13px] font-medium text-sage-100/70">
               Sobre un volumen de
             </p>
