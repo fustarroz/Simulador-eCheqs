@@ -4,9 +4,6 @@ import { Providers } from "@/components/providers";
 import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
-// Una sola familia para toda la UI — Inter variable.
-// Optical sizing automático para que titulares grandes se vean
-// más comprimidos y body permanezca cómodo de leer.
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -14,8 +11,8 @@ const inter = Inter({
   display: "swap",
 });
 
-const SITE_URL = "https://simulador-echeq-alyc.vercel.app";
-const TITLE = "Simulador eCheq ALyC | Grupo IEB";
+const SITE_URL = "https://simulador-e-cheqs-ro7i.vercel.app";
+const TITLE = "Simulador eCheq ALyC";
 const DESCRIPTION =
   "Cuantificá el ahorro impositivo y la liquidez liberada al circular tus cheques electrónicos por una cuenta comitente de ALyC vs. una cuenta bancaria tradicional. Análisis por provincia, actividad y horizonte temporal.";
 
@@ -26,13 +23,15 @@ export const metadata: Metadata = {
   keywords: [
     "eCheq", "ALyC", "cheque electrónico", "impuesto al débito y crédito",
     "ingresos brutos", "IIBB", "capital de trabajo", "Argentina",
-    "Grupo IEB", "wealth management", "tesorería corporativa",
+    "wealth management", "tesorería corporativa",
   ],
-  authors: [{ name: "Grupo IEB" }],
   openGraph: {
-    title: TITLE, description: DESCRIPTION, url: SITE_URL,
-    siteName: "Grupo IEB — Simulador eCheq ALyC",
-    locale: "es_AR", type: "website",
+    title: TITLE,
+    description: DESCRIPTION,
+    url: SITE_URL,
+    siteName: TITLE,
+    locale: "es_AR",
+    type: "website",
   },
   twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
   robots: { index: true, follow: true },
