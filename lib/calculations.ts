@@ -10,14 +10,7 @@ import {
 } from "./constants";
 import type { Activity, Province, SimulatorInput, SimulatorResult } from "./types";
 
-/**
- * Resuelve la alícuota IIBB para una combinación de provincia y actividad,
- * con fallback defensivo si la clave no existe en la matriz.
- */
-export function resolveIibbRate(
-  province: Province,
-  activity: Activity,
-): number {
+export function resolveIibbRate(province: Province, activity: Activity): number {
   const provinceMatrix = PROVINCE_RATES[province];
   if (!provinceMatrix) return FALLBACK_IIBB_RATE;
   const key = ACTIVITY_TO_KEY[activity];
@@ -29,22 +22,21 @@ export function resolveIibbRate(
  * Motor financiero del simulador. Pure function — dado el input, retorna
  * todos los valores derivados sin efectos secundarios.
  *
- * Cambios respecto de la versión anterior:
- *  - La alícuota IIBB depende ahora de provincia × actividad (matriz).
- *  - El coeficiente de base imponible varía según actividad.
- *  - Casos edge: volumen 0, alícuota 0 y horizontes inválidos son
- *    manejados sin dividir por cero.
- *
- * Reglas:
- *  - Ahorro Imp. Deb. y Créd.  = volumen × 1,2 %
- *  - Capital liberado IIBB     = baseImponible × alícuota × 70 %
- *  - Beneficio total           = ambos
- *  - Tasa efectiva             = beneficio / volumen × 100
+ * Cada componente del beneficio (débito, crédito, IIBB) puede activarse o
+ * desactivarse independientemente con los flags includeDebito/includeCredito/
+ * includeIibb. Default: los tres true.
  */
 export function simulate(input: SimulatorInput): SimulatorResult {
-  const { monthlyVolume, activity, horizon, province } = input;
+  const {
+    monthlyVolume,
+    activity,
+    horizon,
+    province,
+    includeDebito = true,
+    includeCredito = true,
+    includeIibb = true,
+  } = input;
 
-  // Validaciones defensivas
   const safeVolume = Number.isFinite(monthlyVolume) && monthlyVolume > 0
     ? monthlyVolume
     : 0;
@@ -53,15 +45,17 @@ export function simulate(input: SimulatorInput): SimulatorResult {
 
   const iibbRate = resolveIibbRate(province, activity);
 
-  // 1) Impuesto al Débito y Crédito
-  const debitTaxSaving = totalVolume * DEBIT_RATE;
-  const creditTaxSaving = totalVolume * CREDIT_RATE;
+  // 1) Impuesto al Débito y Crédito — cada componente independiente
+  const debitTaxSaving = includeDebito ? totalVolume * DEBIT_RATE : 0;
+  const creditTaxSaving = includeCredito ? totalVolume * CREDIT_RATE : 0;
   const debitCreditTotal = debitTaxSaving + creditTaxSaving;
 
   // 2) Retención anticipada de IIBB
   const baseCoef = ACTIVITY_BASE_COEFFICIENT[activity] ?? 1.0;
   const iibbBase = totalVolume * baseCoef;
-  const iibbRetained = iibbBase * (iibbRate / 100) * BANK_IIBB_RETENTION;
+  const iibbRetained = includeIibb
+    ? iibbBase * (iibbRate / 100) * BANK_IIBB_RETENTION
+    : 0;
 
   // 3) Beneficio total y tasa efectiva
   const totalBenefit = debitCreditTotal + iibbRetained;
