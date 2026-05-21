@@ -16,46 +16,52 @@ export function Simulator() {
     activity,
     horizon,
     province,
+    includeDebito,
+    includeCredito,
+    includeIibb,
     setMonthlyVolume,
     setActivity,
     setHorizon,
     setProvince,
+    setIncludeDebito,
+    setIncludeCredito,
+    setIncludeIibb,
     result,
   } = useSimulator();
 
   return (
     <div className="space-y-6 sm:space-y-7">
-      {/* ─── ROW 1: Title + Donut (2-col en lg+) ─── */}
       <section className="grid items-center gap-6 sm:gap-7 lg:grid-cols-2 lg:gap-10">
         <HeroTitle />
         <BenefitDonut result={result} />
       </section>
 
-      {/* ─── ROW 2: Parameters (full) ─── */}
       <ParametersPanel
         monthlyVolume={monthlyVolume}
         activity={activity}
         horizon={horizon}
         province={province}
+        includeDebito={includeDebito}
+        includeCredito={includeCredito}
+        includeIibb={includeIibb}
         onVolumeChange={setMonthlyVolume}
         onActivityChange={setActivity}
         onHorizonChange={setHorizon}
         onProvinceChange={setProvince}
+        onIncludeDebitoChange={setIncludeDebito}
+        onIncludeCreditoChange={setIncludeCredito}
+        onIncludeIibbChange={setIncludeIibb}
       />
 
-      {/* ─── ROW 3: Result card (full) ─── */}
       <ResultCard result={result} />
 
-      {/* ─── ROW 4: Breakdowns (2-col en lg+) ─── */}
       <section className="grid gap-6 sm:gap-7 lg:grid-cols-2">
         <DebitCreditCard result={result} />
         <IibbCard result={result} province={province} activity={activity} />
       </section>
 
-      {/* ─── ROW 5: Proportional breakdown ─── */}
       <ProportionalBreakdown result={result} province={province} />
 
-      {/* ─── ROW 6: Bank vs ALyC comparison ─── */}
       <ComparisonBarChart result={result} />
     </div>
   );
