@@ -5,10 +5,6 @@ import { simulate } from "@/lib/calculations";
 import { VOLUME_DEFAULT } from "@/lib/constants";
 import type { Activity, Horizon, Province, SimulatorInput } from "@/lib/types";
 
-/**
- * Hook centralizado del simulador. Encapsula el estado y memoiza la salida
- * del motor financiero para evitar recálculos en cada render.
- */
 export function useSimulator(initial?: Partial<SimulatorInput>) {
   const [monthlyVolume, setMonthlyVolume] = useState<number>(
     initial?.monthlyVolume ?? VOLUME_DEFAULT,
@@ -23,9 +19,31 @@ export function useSimulator(initial?: Partial<SimulatorInput>) {
     initial?.province ?? "CABA",
   );
 
+  // Flags para incluir/excluir componentes del beneficio
+  const [includeDebito, setIncludeDebito] = useState<boolean>(true);
+  const [includeCredito, setIncludeCredito] = useState<boolean>(true);
+  const [includeIibb, setIncludeIibb] = useState<boolean>(true);
+
   const result = useMemo(
-    () => simulate({ monthlyVolume, activity, horizon, province }),
-    [monthlyVolume, activity, horizon, province],
+    () =>
+      simulate({
+        monthlyVolume,
+        activity,
+        horizon,
+        province,
+        includeDebito,
+        includeCredito,
+        includeIibb,
+      }),
+    [
+      monthlyVolume,
+      activity,
+      horizon,
+      province,
+      includeDebito,
+      includeCredito,
+      includeIibb,
+    ],
   );
 
   return {
@@ -34,11 +52,17 @@ export function useSimulator(initial?: Partial<SimulatorInput>) {
     activity,
     horizon,
     province,
+    includeDebito,
+    includeCredito,
+    includeIibb,
     // Setters
     setMonthlyVolume,
     setActivity,
     setHorizon,
     setProvince,
+    setIncludeDebito,
+    setIncludeCredito,
+    setIncludeIibb,
     // Output
     result,
   };
