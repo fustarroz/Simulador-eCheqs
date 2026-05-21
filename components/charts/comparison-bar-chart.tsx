@@ -19,7 +19,7 @@ import type { SimulatorResult } from "@/lib/types";
 const easeInst = [0.32, 0.72, 0, 1] as const;
 const SAGE_700 = "#324938";
 const SAGE_400 = "#6f9079";
-const INK2 = "#2a2f2d";
+const COST_RUST = "#9c4a37";
 
 interface ComparisonBarChartProps {
   result: SimulatorResult;
@@ -57,8 +57,7 @@ export function ComparisonBarChart({ result }: ComparisonBarChartProps) {
             <BarChart
               data={data}
               margin={{ top: 10, right: 8, left: -12, bottom: 0 }}
-              barCategoryGap={48}
-              maxBarSize={72}
+              barCategoryGap="40%"
             >
             >
               <CartesianGrid
@@ -100,7 +99,7 @@ export function ComparisonBarChart({ result }: ComparisonBarChartProps) {
                       Liquidez disponible
                     </li>
                     <li className="flex items-center gap-1.5">
-                      <span className="h-2.5 w-2.5 rounded-sm" style={{ background: INK2 }} />
+                      <span className="h-2.5 w-2.5 rounded-sm" style={{ background: COST_RUST }} />
                       Costo fiscal
                     </li>
                   </ul>
@@ -109,6 +108,7 @@ export function ComparisonBarChart({ result }: ComparisonBarChartProps) {
               <Bar
                 dataKey="liquidez"
                 stackId="a"
+                barSize={44}
                 radius={[0, 0, 6, 6]}
                 isAnimationActive
                 animationDuration={800}
@@ -123,7 +123,8 @@ export function ComparisonBarChart({ result }: ComparisonBarChartProps) {
               <Bar
                 dataKey="costo"
                 stackId="a"
-                fill={INK2}
+                barSize={44}
+                fill={COST_RUST}
                 radius={[6, 6, 0, 0]}
                 isAnimationActive
                 animationDuration={800}
