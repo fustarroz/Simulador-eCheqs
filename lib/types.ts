@@ -13,11 +13,6 @@ export type Activity =
   | "Industria"
   | "Servicios Primarios";
 
-/**
- * Clave interna usada para indexar la matriz de alícuotas. Separamos el
- * label visible del slug técnico para poder cambiar etiquetas sin tocar
- * los datos.
- */
 export type ActivityKey =
   | "comercio"
   | "servicios"
@@ -40,7 +35,6 @@ export type Province =
   | "Corrientes"
   | "Jujuy";
 
-/** Alícuotas IIBB (en %) para cada actividad dentro de una provincia. */
 export type ProvinceRates = Record<ActivityKey, number>;
 
 export interface SimulatorInput {
@@ -48,6 +42,10 @@ export interface SimulatorInput {
   activity: Activity;
   horizon: Horizon;
   province: Province;
+  /** Flags para incluir/excluir componentes del beneficio. Default: todos true. */
+  includeDebito?: boolean;
+  includeCredito?: boolean;
+  includeIibb?: boolean;
 }
 
 export interface SimulatorResult {
