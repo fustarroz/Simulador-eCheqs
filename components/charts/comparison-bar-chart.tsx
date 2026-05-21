@@ -58,6 +58,8 @@ export function ComparisonBarChart({ result }: ComparisonBarChartProps) {
               data={data}
               margin={{ top: 10, right: 8, left: -12, bottom: 0 }}
               barCategoryGap={48}
+              maxBarSize={72}
+            >
             >
               <CartesianGrid
                 strokeDasharray="3 3"
